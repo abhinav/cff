@@ -5,7 +5,7 @@ package shadowedvar
 
 import (
 	"context"
-	"fmt"
+	"runtime/debug"
 	"time"
 
 	cff2 "go.uber.org/cff"
@@ -98,7 +98,10 @@ func CtxConflict(ctx string) (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff2.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -226,7 +229,10 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("panic: %v", recovered)
+					err = cff2.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -263,7 +269,10 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("panic: %v", recovered)
+					err = cff2.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -374,7 +383,10 @@ func CtxConflictSlice(ctx string, target []string) error {
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = fmt.Errorf("panic: %v", recovered)
+						err = cff2.PanicError{
+							Value:      recovered,
+							Stacktrace: string(debug.Stack()),
+						}
 					}
 				}()
 				err = _53_4(idx, val)
@@ -477,7 +489,10 @@ func CtxConflictMap(ctx int, input map[int]int) ([]int, error) {
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = fmt.Errorf("panic: %v", recovered)
+						err = cff2.PanicError{
+							Value:      recovered,
+							Stacktrace: string(debug.Stack()),
+						}
 					}
 				}()
 
@@ -614,7 +629,10 @@ func PredicateCtxConflict(f func(), ctx bool) error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff2.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 

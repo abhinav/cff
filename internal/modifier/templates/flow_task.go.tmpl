@@ -17,7 +17,10 @@
 	defer func() {
 		recovered := recover()
 		if recovered != nil {
-			err = {{ import "fmt" }}.Errorf("task panic: %v", recovered)
+			err = {{ $cff }}.PanicError{
+				Value: recovered,
+				Stacktrace: string({{ import "runtime/debug" }}.Stack()),
+			}
 		}
 	}()
 

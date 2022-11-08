@@ -5,7 +5,7 @@ package predicate
 
 import (
 	"context"
-	"fmt"
+	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -124,7 +124,10 @@ func Simple(f func(), pred bool) error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -278,7 +281,10 @@ func SimpleWithContextTask() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -432,7 +438,10 @@ func SimpleWithContextPredicate() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -586,7 +595,10 @@ func SimpleWithContextTaskAndPredicate() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -721,7 +733,10 @@ func ExtraDependencies() error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -763,7 +778,10 @@ func ExtraDependencies() error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -833,7 +851,10 @@ func ExtraDependencies() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -992,7 +1013,10 @@ func MultiplePredicates() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -1066,7 +1090,10 @@ func MultiplePredicates() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -1218,7 +1245,10 @@ func Panicked() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 

@@ -51,7 +51,7 @@ func TestPanicRecovered(t *testing.T) {
 			err = Panicked()
 		},
 	)
-	assert.EqualError(t, err, "task panic: sad times")
+	assert.ErrorContains(t, err, "panic: sad times\nstacktrace:")
 }
 
 func TestPanicFallback(t *testing.T) {

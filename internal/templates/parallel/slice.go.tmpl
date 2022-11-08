@@ -18,7 +18,10 @@ for {{if .HasIndexParameter}} idx {{else}} _ {{end}}, val := range {{ $t }}Slice
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = {{ import "fmt" }}.Errorf("panic: %v", recovered)
+				err = {{ $cff }}.PanicError{
+					Value: recovered,
+					Stacktrace: string({{ import "runtime/debug" }}.Stack()),
+				}
 			}
 		}()
 		{{ if .Function.HasError }} err = {{ end }}{{ if .HasIndexParameter }}{{ template "callSlice" . }}{{else}}{{ template "callSliceNoIndex" . }}{{end}}
@@ -39,7 +42,10 @@ for {{if .HasIndexParameter}} idx {{else}} _ {{end}}, val := range {{ $t }}Slice
 			defer func() {
 				recovered := recover()
 				if recovered != nil {
-					err = {{ import "fmt" }}.Errorf("panic: %v", recovered)
+					err = {{ $cff }}.PanicError{
+						Value: recovered,
+						Stacktrace: string({{ import "runtime/debug" }}.Stack()),
+					}
 				}
 			}()
 

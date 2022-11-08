@@ -5,7 +5,7 @@ package benchmark
 
 import (
 	"context"
-	"fmt"
+	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -125,7 +125,10 @@ func PredicateCombined() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -167,7 +170,10 @@ func PredicateCombined() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -296,7 +302,10 @@ func PredicateSplit() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
@@ -363,7 +372,10 @@ func PredicateSplit() float64 {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = fmt.Errorf("task panic: %v", recovered)
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: string(debug.Stack()),
+					}
 				}
 			}()
 
