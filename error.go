@@ -49,10 +49,13 @@ import (
 //	} else {
 //		// err is not from a panic
 //	}
-//
-
 type PanicError struct {
-	Value      any
+	// Value contains the value recovered by call to recover() after a panic
+	Value any
+
+	// Stacktrace contains string of what call stack looks like when the panic happened.
+	// This is automatically generated in cff.NewPanicError(), and panic() should
+	// always be at the top of the stack
 	Stacktrace string
 }
 
