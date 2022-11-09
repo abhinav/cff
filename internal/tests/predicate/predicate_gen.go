@@ -5,7 +5,6 @@ package predicate
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -124,10 +123,7 @@ func Simple(f func(), pred bool) error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -281,10 +277,7 @@ func SimpleWithContextTask() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -438,10 +431,7 @@ func SimpleWithContextPredicate() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -595,10 +585,7 @@ func SimpleWithContextTaskAndPredicate() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -733,10 +720,7 @@ func ExtraDependencies() error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -778,10 +762,7 @@ func ExtraDependencies() error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -851,10 +832,7 @@ func ExtraDependencies() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -1013,10 +991,7 @@ func MultiplePredicates() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -1090,10 +1065,7 @@ func MultiplePredicates() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -1245,10 +1217,7 @@ func Panicked() error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 

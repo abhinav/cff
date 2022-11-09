@@ -5,7 +5,6 @@ package namedimports
 
 import (
 	newctx "context"
-	"runtime/debug"
 	"time"
 
 	cffv2 "go.uber.org/cff"
@@ -97,10 +96,7 @@ func run(ctx newctx.Context) error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cffv2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cffv2.NewPanicError(recovered)
 				}
 			}()
 

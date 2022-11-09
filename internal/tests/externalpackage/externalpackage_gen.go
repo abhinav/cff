@@ -5,7 +5,6 @@ package externalpackage
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	"github.com/gofrs/uuid"
@@ -100,10 +99,7 @@ func NestedType(ctx context.Context, driverUUID uuid.UUID) error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -217,10 +213,7 @@ func ImplicitType(ctx context.Context) error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -262,10 +255,7 @@ func ImplicitType(ctx context.Context) error {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 

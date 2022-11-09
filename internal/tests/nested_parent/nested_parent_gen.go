@@ -5,7 +5,6 @@ package nestedparent
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -99,10 +98,7 @@ func Parent(ctx context.Context, i int) (s string, err error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 

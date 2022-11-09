@@ -11,6 +11,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"go.uber.org/cff"
 	"go.uber.org/multierr"
 	"golang.org/x/exp/maps"
 )
@@ -34,6 +35,11 @@ func TestTasksWithPanic(t *testing.T) {
 	err := TasksWithPanic()
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "panic: sad times\nstacktrace:")
+	// check that error returned is actually a panic error
+	var panicError cff.PanicError
+	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
+	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
 }
 
 func TestMultipleTasks(t *testing.T) {
@@ -73,6 +79,11 @@ func TestTaskWithPanic(t *testing.T) {
 	err := TaskWithPanic()
 	require.Error(t, err)
 	assert.Contains(t, err.Error(), "panic: sad times\nstacktrace:")
+	// check that error returned is actually a panic error
+	var panicError cff.PanicError
+	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
+	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
 }
 
 func TestMultipleTask(t *testing.T) {
@@ -579,7 +590,10 @@ func TestMapContinueOnError(t *testing.T) {
 
 	// Using assert.Contains here because the returned error is non-deterministic.
 	assert.Contains(t, err.Error(), "sad times")
-	assert.Contains(t, err.Error(), "panic: sadder times\nstacktrace:")
+	assert.Contains(t, err.Error(), "panic: sadder times")
+	// Check stack trace of PanicError with assert.Contains
+	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, err.Error(), ".AssignMapItems.func", "function that panicked should be in the stack")
 
 	assert.Equal(t, []string{"copy", "me"}, keys)
 	assert.Equal(t, []int{0, 1}, values)

@@ -55,10 +55,7 @@
 			{{- end }}{{ if gt (len .FallbackWithResults) 0 }}, {{ end }} nil
 		{{- else -}}
 			taskEmitter.TaskPanic(ctx, recovered)
-			err = {{ $cff }}.PanicError{
-				Value: recovered,
-				Stacktrace: string({{ import "runtime/debug" }}.Stack()),
-			}
+			err = {{ $cff }}.NewPanicError(recovered)
 		{{- end }}
 		}
 	}()

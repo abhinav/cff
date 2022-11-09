@@ -6,7 +6,6 @@ package example
 import (
 	"context"
 	"fmt"
-	"runtime/debug"
 	"strconv"
 	"time"
 
@@ -289,10 +288,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -321,10 +317,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -356,10 +349,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -392,10 +382,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -429,10 +416,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -464,10 +448,7 @@ func _cffFlowmagicv2_32_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 

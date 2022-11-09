@@ -6,7 +6,6 @@ package importcollision
 import (
 	"context"
 	_template "html/template"
-	"runtime/debug"
 	__template "text/template"
 	"time"
 
@@ -107,10 +106,7 @@ func Flow() (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -152,10 +148,7 @@ func Flow() (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -197,10 +190,7 @@ func Flow() (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -242,10 +232,7 @@ func Flow() (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -289,10 +276,7 @@ func Flow() (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 

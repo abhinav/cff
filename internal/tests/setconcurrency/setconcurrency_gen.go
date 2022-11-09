@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"context"
 	"runtime"
-	"runtime/debug"
 	"strings"
 	"time"
 
@@ -106,10 +105,7 @@ func NumWorkers(conc int) (int, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -232,10 +228,7 @@ func NumWorkersNoArg() (int, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 

@@ -7,7 +7,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"runtime/debug"
 	"strconv"
 	"time"
 
@@ -99,10 +98,7 @@ func Flow(s string, buf io.Writer) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 

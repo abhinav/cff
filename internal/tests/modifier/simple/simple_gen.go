@@ -5,7 +5,6 @@ package simple
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -206,10 +205,7 @@ func _cffFlowsimple_21_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -238,10 +234,7 @@ func _cffFlowsimple_21_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -273,10 +266,7 @@ func _cffFlowsimple_21_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -308,10 +298,7 @@ func _cffFlowsimple_21_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -439,10 +426,7 @@ func _cffFlowsimple_55_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -471,10 +455,7 @@ func _cffFlowsimple_55_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -506,10 +487,7 @@ func _cffFlowsimple_55_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -631,10 +609,7 @@ func _cffFlowsimple_82_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -663,10 +638,7 @@ func _cffFlowsimple_82_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -698,10 +670,7 @@ func _cffFlowsimple_82_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -828,10 +797,7 @@ func _cffFlowsimple_106_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -860,10 +826,7 @@ func _cffFlowsimple_106_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 
@@ -895,10 +858,7 @@ func _cffFlowsimple_106_9(
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = cff.PanicError{
-					Value:      recovered,
-					Stacktrace: string(debug.Stack()),
-				}
+				err = cff.NewPanicError(recovered)
 			}
 		}()
 

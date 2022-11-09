@@ -5,7 +5,6 @@ package shadowedvar
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	cff2 "go.uber.org/cff"
@@ -98,10 +97,7 @@ func CtxConflict(ctx string) (string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -229,10 +225,7 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -269,10 +262,7 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 
@@ -383,10 +373,7 @@ func CtxConflictSlice(ctx string, target []string) error {
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff2.PanicError{
-							Value:      recovered,
-							Stacktrace: string(debug.Stack()),
-						}
+						err = cff2.NewPanicError(recovered)
 					}
 				}()
 				err = _53_4(idx, val)
@@ -489,10 +476,7 @@ func CtxConflictMap(ctx int, input map[int]int) ([]int, error) {
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff2.PanicError{
-							Value:      recovered,
-							Stacktrace: string(debug.Stack()),
-						}
+						err = cff2.NewPanicError(recovered)
 					}
 				}()
 
@@ -629,10 +613,7 @@ func PredicateCtxConflict(f func(), ctx bool) error {
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff2.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff2.NewPanicError(recovered)
 				}
 			}()
 

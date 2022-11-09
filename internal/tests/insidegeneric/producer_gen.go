@@ -5,7 +5,6 @@ package insidegeneric
 
 import (
 	"context"
-	"runtime/debug"
 	"time"
 
 	"go.uber.org/cff"
@@ -105,10 +104,7 @@ func JoinTwo[A, B, C any](
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -155,10 +151,7 @@ func JoinTwo[A, B, C any](
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -205,10 +198,7 @@ func JoinTwo[A, B, C any](
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
@@ -327,10 +317,7 @@ func JoinMany[T any](producers ...Producer[T]) ([]T, error) {
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.PanicError{
-							Value:      recovered,
-							Stacktrace: string(debug.Stack()),
-						}
+						err = cff.NewPanicError(recovered)
 					}
 				}()
 				err = _38_4(ctx, idx, val)

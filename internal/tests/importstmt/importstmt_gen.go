@@ -5,7 +5,6 @@ package importstmt
 
 import (
 	"context"
-	"runtime/debug"
 	"strconv"
 	"time"
 
@@ -99,10 +98,7 @@ func Flow() (int, error) {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.PanicError{
-						Value:      recovered,
-						Stacktrace: string(debug.Stack()),
-					}
+					err = cff.NewPanicError(recovered)
 				}
 			}()
 
