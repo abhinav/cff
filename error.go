@@ -27,6 +27,30 @@ import (
 
 // PanicError is a custom error that is thrown when a task panics. It contains the value
 // that is recovered from the panic and the stacktrace of where the panic happened.
+// For example, with the following flow:
+//
+//	var r string
+//	err := cff.Flow(
+//		context.Background(),
+//		cff.Results(&r),
+//		cff.Task(
+//			func() string {
+//				panic("panic")
+//			},
+//		),
+//	)
+//
+// You can do the following to determine if an error from the cff.Flow is from a panic:
+//
+//	var panicError cff.PanicError
+//	if errors.As(err, &panicError) {
+//		// err is from a panic
+//		fmt.Printf("recovered: %s\n", panicError.Value)
+//	} else {
+//		// err is not from a panic
+//	}
+//
+
 type PanicError struct {
 	Value      any
 	Stacktrace string
@@ -38,6 +62,8 @@ func (pe PanicError) Error() string {
 	return fmt.Sprintf("panic: %v\nstacktrace:\n%s", pe.Value, pe.Stacktrace)
 }
 
+// NewPanicError intializes a PanicError with the given value and a stack trace
+// that starts from the call to panic.
 func NewPanicError(value any) PanicError {
 	return PanicError{
 		Value:      value,
