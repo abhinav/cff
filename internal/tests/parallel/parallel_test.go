@@ -37,9 +37,10 @@ func TestTasksWithPanic(t *testing.T) {
 	assert.Contains(t, err.Error(), "panic: sad times\nstacktrace:")
 	// check that error returned is actually a panic error
 	var panicError cff.PanicError
-	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
-	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
+	assert.Equal(t, true, errors.As(err, &panicError), "error returned should be a cff.PanicError")
+	assert.Equal(t, "sad times", panicError.Value, "PanicError.Value should be recovered value")
 	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, ".TasksWithPanic.func", "function that panicked should be in the stack")
 }
 
 func TestMultipleTasks(t *testing.T) {
@@ -84,6 +85,7 @@ func TestTaskWithPanic(t *testing.T) {
 	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
 	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
 	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, ".TaskWithPanic.func", "function that panicked should be in the stack")
 }
 
 func TestMultipleTask(t *testing.T) {
@@ -214,6 +216,11 @@ func TestSlicePanic(t *testing.T) {
 	require.Error(t, err)
 
 	assert.Contains(t, err.Error(), "panic: sadder times\nstacktrace:")
+	var panicError cff.PanicError
+	assert.Equal(t, true, errors.As(err, &panicError), "error returned should be a cff.PanicError")
+	assert.Equal(t, "sadder times", panicError.Value, "PanicError.Value should be recovered value")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, ".AssignSliceItems.func", "function that panicked should be in the stack")
 	assert.Equal(t, "panic", target[1])
 }
 
@@ -227,6 +234,8 @@ func TestSliceContinueOnError(t *testing.T) {
 
 	assert.Contains(t, err.Error(), "sad times")
 	assert.Contains(t, err.Error(), "panic: sadder times\nstacktrace:")
+	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, err.Error(), ".AssignSliceItems.func", "function that panicked should be in the stack")
 	assert.Equal(t, []string{"copy", "error", "panic", "me"}, target)
 }
 
