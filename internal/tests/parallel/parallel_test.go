@@ -39,7 +39,7 @@ func TestTasksWithPanic(t *testing.T) {
 	var panicError cff.PanicError
 	assert.Equal(t, true, errors.As(err, &panicError), "error returned should be a cff.PanicError")
 	assert.Equal(t, "sad times", panicError.Value, "PanicError.Value should be recovered value")
-	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, panicError.Stacktrace, ".TasksWithPanic.func", "function that panicked should be in the stack")
 }
 
@@ -84,7 +84,7 @@ func TestTaskWithPanic(t *testing.T) {
 	var panicError cff.PanicError
 	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
 	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
-	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, panicError.Stacktrace, ".TaskWithPanic.func", "function that panicked should be in the stack")
 }
 
@@ -219,7 +219,7 @@ func TestSlicePanic(t *testing.T) {
 	var panicError cff.PanicError
 	assert.Equal(t, true, errors.As(err, &panicError), "error returned should be a cff.PanicError")
 	assert.Equal(t, "sadder times", panicError.Value, "PanicError.Value should be recovered value")
-	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, panicError.Stacktrace, ".AssignSliceItems.func", "function that panicked should be in the stack")
 	assert.Equal(t, "panic", target[1])
 }
@@ -234,7 +234,7 @@ func TestSliceContinueOnError(t *testing.T) {
 
 	assert.Contains(t, err.Error(), "sad times")
 	assert.Contains(t, err.Error(), "panic: sadder times\nstacktrace:")
-	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, err.Error(), ".AssignSliceItems.func", "function that panicked should be in the stack")
 	assert.Equal(t, []string{"copy", "error", "panic", "me"}, target)
 }
@@ -601,7 +601,7 @@ func TestMapContinueOnError(t *testing.T) {
 	assert.Contains(t, err.Error(), "sad times")
 	assert.Contains(t, err.Error(), "panic: sadder times")
 	// Check stack trace of PanicError with assert.Contains
-	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the ")
+	assert.Contains(t, err.Error(), "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, err.Error(), ".AssignMapItems.func", "function that panicked should be in the stack")
 
 	assert.Equal(t, []string{"copy", "me"}, keys)
