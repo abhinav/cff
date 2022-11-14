@@ -22,7 +22,6 @@ package cff
 
 import (
 	"fmt"
-	"runtime"
 )
 
 // PanicError is a custom error that is thrown when a task panics. It contains the value
@@ -60,59 +59,4 @@ var _ error = PanicError{}
 
 func (pe PanicError) Error() string {
 	return fmt.Sprintf("panic: %v\nstacktrace:\n%s", pe.Value, pe.Stacktrace)
-}
-
-// NewPanicError intializes a PanicError with the given value and a stack trace
-// that starts from the call to panic.
-func NewPanicError(value any) PanicError {
-	return PanicError{
-		Value:      value,
-		Stacktrace: panicStacktrace(),
-	}
-}
-
-// panicStacktrace traverses a list of callers in the stack and finds where panic
-// happened and returns a stacktrace string starting from panic
-func panicStacktrace() string {
-	pc := make([]uintptr, 20)
-	// skipping 3 in the callers, which are:
-	// - runtime.Callers
-	// - caller of Callers (self)
-	// - caller of self (NewPanicError)
-	// because the panic should not be in any of these callers
-	n := runtime.Callers(3, pc)
-	if n == 0 {
-		return ""
-	}
-
-	pc = pc[:n]
-	frames := runtime.CallersFrames(pc)
-	seenPanic := false
-	stacktrace := "[frames]:\n"
-
-	for {
-		frame, more := frames.Next()
-		if frame.Function == "runtime.gopanic" {
-			seenPanic = true
-		}
-		if seenPanic {
-			stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formatFrame(frame))
-		}
-		// Check whether there are more frames to process after this one
-		// or if stack trace is getting too long. 1024 was chosen to match
-		// length used by runtime/debug.Stack()
-		if !more || len(stacktrace) >= 1024 {
-			break
-		}
-	}
-
-	return stacktrace
-}
-
-func formatFrame(frame runtime.Frame) string {
-	funcName := frame.Function
-	if funcName == "runtime.gopanic" {
-		funcName = "panic"
-	}
-	return fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
 }

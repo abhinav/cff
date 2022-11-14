@@ -1,0 +1,49 @@
+{{- define "panicError" -}}
+{{- $cff := import "go.uber.org/cff" -}}
+{{ template "stacktrace" }}
+err = {{ $cff }}.PanicError{
+    Value:      recovered,
+    Stacktrace: stacktrace,
+}
+{{- end -}}
+
+{{- define "stacktrace" -}}
+{{- $runtime := import "runtime" -}}
+pc := make([]uintptr, 20)
+{{- /* skipping 2 in the callers, which are: */ -}}
+{{- /* - runtime.Callers */ -}}
+{{- /* - caller of Callers (self) */ -}}
+{{- /* because the panic should not be in any of these callers */}}
+n := {{ $runtime }}.Callers(2, pc)
+stacktrace := "[frames]:\n"
+if n != 0 {
+    pc = pc[:n]
+    frames := {{ $runtime }}.CallersFrames(pc)
+    seenPanic := false
+
+    for {
+        frame, more := frames.Next()
+        if frame.Function == "runtime.gopanic" {
+            seenPanic = true
+        }
+        if seenPanic {
+            {{ template "formatFrame" }}
+            stacktrace = {{ import "fmt" }}.Sprintf("%s%s\n", stacktrace, formattedFrame)
+        }
+        {{- /* Check whether there are more frames to process after this one */ -}}
+        {{- /* or if stack trace is getting too long. 1024 was chosen to match */ -}}
+        {{- /* length used by runtime/debug.Stack() */}}
+        if !more || len(stacktrace) >= 1024 {
+            break
+        }
+    }
+}
+{{- end -}}
+
+{{- define "formatFrame" -}}
+funcName := frame.Function
+if funcName == "runtime.gopanic" {
+    funcName = "panic"
+}
+formattedFrame := {{ import "fmt" }}.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+{{- end -}}

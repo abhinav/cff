@@ -55,7 +55,7 @@
 			{{- end }}{{ if gt (len .FallbackWithResults) 0 }}, {{ end }} nil
 		{{- else -}}
 			taskEmitter.TaskPanic(ctx, recovered)
-			err = {{ $cff }}.NewPanicError(recovered)
+			{{ template "panicError" }}
 		{{- end }}
 		}
 	}()

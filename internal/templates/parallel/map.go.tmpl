@@ -15,7 +15,7 @@ for key, val := range {{ expr .Map }} {
 		defer func() {
 			recovered := recover()
 			if recovered != nil {
-				err = {{ $cff }}.NewPanicError(recovered)
+				{{ template "panicError" }}
 			}
 		}()
 
@@ -38,7 +38,7 @@ for key, val := range {{ expr .Map }} {
 		Run: func(ctx {{ $context }}.Context) (err error) {
 			defer func() {
 				if recovered := recover(); recovered != nil {
-					err = {{ $cff }}.NewPanicError(recovered)
+					{{ template "panicError" }}
 				}
 			}()
 

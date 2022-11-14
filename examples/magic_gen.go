@@ -7,6 +7,7 @@ package example
 import (
 	"context"
 	"fmt"
+	"runtime"
 	"strconv"
 	"time"
 
@@ -81,7 +82,7 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 			return req.LDAPGroup != "everyone"
 		}
 
-		/*line magic_gen.go:85*/
+		/*line magic_gen.go:86*/
 		ctx := _32_18
 		var v1 *Request = _33_14
 		emitter := cff.NopEmitter()
@@ -156,7 +157,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -198,7 +228,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -359,7 +418,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				}
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -410,7 +498,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -460,7 +577,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -549,7 +695,7 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 		/*line magic.go:130:4*/
 		_130_4 := map[string]int{"a": 1, "b": 2, "c": 3}
 
-		/*line magic_gen.go:553*/
+		/*line magic_gen.go:699*/
 		ctx := _79_3
 		emitter := cff.NopEmitter()
 
@@ -626,7 +772,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -667,7 +842,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -708,7 +912,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -743,7 +976,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.NewPanicError(recovered)
+						pc := make([]uintptr, 20)
+						n := runtime.Callers(2, pc)
+						stacktrace := "[frames]:\n"
+						if n != 0 {
+							pc = pc[:n]
+							frames := runtime.CallersFrames(pc)
+							seenPanic := false
+
+							for {
+								frame, more := frames.Next()
+								if frame.Function == "runtime.gopanic" {
+									seenPanic = true
+								}
+								if seenPanic {
+									funcName := frame.Function
+									if funcName == "runtime.gopanic" {
+										funcName = "panic"
+									}
+									formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+									stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+								}
+								if !more || len(stacktrace) >= 1024 {
+									break
+								}
+							}
+						}
+						err = cff.PanicError{
+							Value:      recovered,
+							Stacktrace: stacktrace,
+						}
 					}
 				}()
 				err = _94_4(ctx, idx, val)
@@ -768,7 +1030,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.NewPanicError(recovered)
+						pc := make([]uintptr, 20)
+						n := runtime.Callers(2, pc)
+						stacktrace := "[frames]:\n"
+						if n != 0 {
+							pc = pc[:n]
+							frames := runtime.CallersFrames(pc)
+							seenPanic := false
+
+							for {
+								frame, more := frames.Next()
+								if frame.Function == "runtime.gopanic" {
+									seenPanic = true
+								}
+								if seenPanic {
+									funcName := frame.Function
+									if funcName == "runtime.gopanic" {
+										funcName = "panic"
+									}
+									formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+									stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+								}
+								if !more || len(stacktrace) >= 1024 {
+									break
+								}
+							}
+						}
+						err = cff.PanicError{
+							Value:      recovered,
+							Stacktrace: stacktrace,
+						}
 					}
 				}()
 				err = _102_4(ctx, val)
@@ -793,7 +1084,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.NewPanicError(recovered)
+						pc := make([]uintptr, 20)
+						n := runtime.Callers(2, pc)
+						stacktrace := "[frames]:\n"
+						if n != 0 {
+							pc = pc[:n]
+							frames := runtime.CallersFrames(pc)
+							seenPanic := false
+
+							for {
+								frame, more := frames.Next()
+								if frame.Function == "runtime.gopanic" {
+									seenPanic = true
+								}
+								if seenPanic {
+									funcName := frame.Function
+									if funcName == "runtime.gopanic" {
+										funcName = "panic"
+									}
+									formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+									stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+								}
+								if !more || len(stacktrace) >= 1024 {
+									break
+								}
+							}
+						}
+						err = cff.PanicError{
+							Value:      recovered,
+							Stacktrace: stacktrace,
+						}
 					}
 				}()
 				err = _110_4(ctx, idx, val)
@@ -817,7 +1137,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.NewPanicError(recovered)
+						pc := make([]uintptr, 20)
+						n := runtime.Callers(2, pc)
+						stacktrace := "[frames]:\n"
+						if n != 0 {
+							pc = pc[:n]
+							frames := runtime.CallersFrames(pc)
+							seenPanic := false
+
+							for {
+								frame, more := frames.Next()
+								if frame.Function == "runtime.gopanic" {
+									seenPanic = true
+								}
+								if seenPanic {
+									funcName := frame.Function
+									if funcName == "runtime.gopanic" {
+										funcName = "panic"
+									}
+									formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+									stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+								}
+								if !more || len(stacktrace) >= 1024 {
+									break
+								}
+							}
+						}
+						err = cff.PanicError{
+							Value:      recovered,
+							Stacktrace: stacktrace,
+						}
 					}
 				}()
 
@@ -843,7 +1192,36 @@ func (h *fooHandler) HandleFoo(ctx context.Context, req *Request) (*Response, er
 				defer func() {
 					recovered := recover()
 					if recovered != nil {
-						err = cff.NewPanicError(recovered)
+						pc := make([]uintptr, 20)
+						n := runtime.Callers(2, pc)
+						stacktrace := "[frames]:\n"
+						if n != 0 {
+							pc = pc[:n]
+							frames := runtime.CallersFrames(pc)
+							seenPanic := false
+
+							for {
+								frame, more := frames.Next()
+								if frame.Function == "runtime.gopanic" {
+									seenPanic = true
+								}
+								if seenPanic {
+									funcName := frame.Function
+									if funcName == "runtime.gopanic" {
+										funcName = "panic"
+									}
+									formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+									stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+								}
+								if !more || len(stacktrace) >= 1024 {
+									break
+								}
+							}
+						}
+						err = cff.PanicError{
+							Value:      recovered,
+							Stacktrace: stacktrace,
+						}
 					}
 				}()
 

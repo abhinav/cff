@@ -5,6 +5,8 @@ package benchmark
 
 import (
 	"context"
+	"fmt"
+	"runtime"
 	"sync"
 	"time"
 
@@ -110,7 +112,36 @@ func Baseline() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -152,7 +183,36 @@ func Baseline() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 
@@ -194,7 +254,36 @@ func Baseline() float64 {
 				recovered := recover()
 				if recovered != nil {
 					taskEmitter.TaskPanic(ctx, recovered)
-					err = cff.NewPanicError(recovered)
+					pc := make([]uintptr, 20)
+					n := runtime.Callers(2, pc)
+					stacktrace := "[frames]:\n"
+					if n != 0 {
+						pc = pc[:n]
+						frames := runtime.CallersFrames(pc)
+						seenPanic := false
+
+						for {
+							frame, more := frames.Next()
+							if frame.Function == "runtime.gopanic" {
+								seenPanic = true
+							}
+							if seenPanic {
+								funcName := frame.Function
+								if funcName == "runtime.gopanic" {
+									funcName = "panic"
+								}
+								formattedFrame := fmt.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
+								stacktrace = fmt.Sprintf("%s%s\n", stacktrace, formattedFrame)
+							}
+							if !more || len(stacktrace) >= 1024 {
+								break
+							}
+						}
+					}
+					err = cff.PanicError{
+						Value:      recovered,
+						Stacktrace: stacktrace,
+					}
 				}
 			}()
 

@@ -17,7 +17,7 @@
 	defer func() {
 		recovered := recover()
 		if recovered != nil {
-			err = {{ $cff }}.NewPanicError(recovered)
+			{{ template "panicError" }}
 		}
 	}()
 
