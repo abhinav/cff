@@ -9,6 +9,8 @@ err = {{ $cff }}.PanicError{
 
 {{- define "stacktrace" -}}
 {{- $runtime := import "runtime" -}}
+{{ template "funcFormatFunction" }}
+{{ template "funcGetStack" }}
 pc := make([]uintptr, 20)
 {{- /* skipping 2 in the callers, which are: */ -}}
 {{- /* - runtime.Callers */ -}}
@@ -19,31 +21,37 @@ stacktrace := "[frames]:\n"
 if n != 0 {
     pc = pc[:n]
     frames := {{ $runtime }}.CallersFrames(pc)
-    seenPanic := false
+    stacktrace = getStack(frames)
+}
+{{- end -}}
 
+{{- define "funcGetStack" -}}
+{{- $fmt := import "fmt" -}}
+{{- $strings := import "strings" -}}
+getStack := func (frames *{{ import "runtime" }}.Frames) string {
+    var b {{ $strings }}.Builder
+	{{ $fmt }}.Fprintf(&b, "[frames]:\n")
     for {
         frame, more := frames.Next()
-        if frame.Function == "runtime.gopanic" {
-            seenPanic = true
-        }
-        if seenPanic {
-            {{ template "formatFrame" }}
-            stacktrace = {{ import "fmt" }}.Sprintf("%s%s\n", stacktrace, formattedFrame)
-        }
+        {{ $fmt }}.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
         {{- /* Check whether there are more frames to process after this one */ -}}
         {{- /* or if stack trace is getting too long. 1024 was chosen to match */ -}}
         {{- /* length used by runtime/debug.Stack() */}}
-        if !more || len(stacktrace) >= 1024 {
+        if !more || b.Len() >= 1024 {
             break
         }
     }
+    return b.String()
 }
 {{- end -}}
 
-{{- define "formatFrame" -}}
-funcName := frame.Function
-if funcName == "runtime.gopanic" {
-    funcName = "panic"
+{{- define "funcFormatFunction" -}}
+formatFunction := func (funcName string) string {
+    if funcName == "runtime.gopanic" {
+        return "panic"
+    }
+    return funcName
 }
-formattedFrame := {{ import "fmt" }}.Sprintf("%s()\n\t%s:%d", funcName, frame.File, frame.Line)
 {{- end -}}
+
+{{- /* vim:set ft=gotexttmpl noet: */ -}}
