@@ -82,8 +82,8 @@ func TestTaskWithPanic(t *testing.T) {
 	assert.Contains(t, err.Error(), "panic: sad times\nstacktrace:")
 	// check that error returned is actually a panic error
 	var panicError cff.PanicError
-	assert.Equal(t, errors.As(err, &panicError), true, "error returned should be a cff.PanicError")
-	assert.Equal(t, panicError.Value, "sad times", "PanicError.Value should be recovered value")
+	assert.Equal(t, true, errors.As(err, &panicError), "error returned should be a cff.PanicError")
+	assert.Equal(t, "sad times", panicError.Value, "PanicError.Value should be recovered value")
 	assert.Contains(t, panicError.Stacktrace, "[frames]:\npanic()", "panic should show up at the top of the stack")
 	assert.Contains(t, panicError.Stacktrace, ".TaskWithPanic.func", "function that panicked should be in the stack")
 }
