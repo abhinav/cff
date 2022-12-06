@@ -220,13 +220,13 @@ func _cffFlowsimple_21_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -278,13 +278,13 @@ func _cffFlowsimple_21_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -339,13 +339,13 @@ func _cffFlowsimple_21_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -400,13 +400,13 @@ func _cffFlowsimple_21_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -557,13 +557,13 @@ func _cffFlowsimple_55_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -615,13 +615,13 @@ func _cffFlowsimple_55_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -676,13 +676,13 @@ func _cffFlowsimple_55_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -827,13 +827,13 @@ func _cffFlowsimple_82_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -885,13 +885,13 @@ func _cffFlowsimple_82_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -946,13 +946,13 @@ func _cffFlowsimple_82_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -1102,13 +1102,13 @@ func _cffFlowsimple_106_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -1160,13 +1160,13 @@ func _cffFlowsimple_106_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {
@@ -1221,13 +1221,13 @@ func _cffFlowsimple_106_9(
 					for {
 						frame, more := frames.Next()
 						fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-						if !more || b.Len() >= 1024 {
+						if !more {
 							break
 						}
 					}
 					return b.String()
 				}
-				pc := make([]uintptr, 20)
+				pc := make([]uintptr, 64)
 				n := runtime.Callers(2, pc)
 				stacktrace := "[frames]:\n"
 				if n != 0 {

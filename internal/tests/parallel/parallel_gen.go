@@ -123,13 +123,13 @@ func TasksAndTask(m *sync.Map) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -189,13 +189,13 @@ func TasksAndTask(m *sync.Map) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -255,13 +255,13 @@ func TasksAndTask(m *sync.Map) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -396,13 +396,13 @@ func TasksWithError() error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -541,13 +541,13 @@ func TasksWithPanic() error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -689,13 +689,13 @@ func MultipleTasks(c chan<- string) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -755,13 +755,13 @@ func MultipleTasks(c chan<- string) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -901,13 +901,13 @@ func ContextErrorBefore(ctx context.Context, src, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1053,13 +1053,13 @@ func ContextErrorInFlight(ctx context.Context, cancel func(), src, target []int)
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1119,13 +1119,13 @@ func ContextErrorInFlight(ctx context.Context, cancel func(), src, target []int)
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1185,13 +1185,13 @@ func ContextErrorInFlight(ctx context.Context, cancel func(), src, target []int)
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1326,13 +1326,13 @@ func TaskWithError() error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1471,13 +1471,13 @@ func TaskWithPanic() error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1620,13 +1620,13 @@ func MultipleTask(src, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1686,13 +1686,13 @@ func MultipleTask(src, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1858,13 +1858,13 @@ func ContinueOnError(src []int, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1928,13 +1928,13 @@ func ContinueOnError(src []int, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -1994,13 +1994,13 @@ func ContinueOnError(src []int, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2060,13 +2060,13 @@ func ContinueOnError(src []int, target []int) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2226,13 +2226,13 @@ func ContinueOnErrorBoolExpr(src, target []int, fn func() bool) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2296,13 +2296,13 @@ func ContinueOnErrorBoolExpr(src, target []int, fn func() bool) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2362,13 +2362,13 @@ func ContinueOnErrorBoolExpr(src, target []int, fn func() bool) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2506,13 +2506,13 @@ func ContinueOnErrorCancelled(ctx context.Context, src []int, target []int) erro
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2661,13 +2661,13 @@ func ContinueOnErrorCancelledDuring(ctx context.Context, cancel func(), src []in
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2727,13 +2727,13 @@ func ContinueOnErrorCancelledDuring(ctx context.Context, cancel func(), src []in
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2793,13 +2793,13 @@ func ContinueOnErrorCancelledDuring(ctx context.Context, cancel func(), src []in
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -2938,13 +2938,13 @@ func SliceMultiple(srcA, srcB, targetA, targetB []int) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -2992,13 +2992,13 @@ func SliceMultiple(srcA, srcB, targetA, targetB []int) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3130,13 +3130,13 @@ func SliceNoIndex(srcA, srcB, targetA, targetB []int) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3184,13 +3184,13 @@ func SliceNoIndex(srcA, srcB, targetA, targetB []int) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3318,13 +3318,13 @@ func SliceWrapped(src, target manyInts) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3461,13 +3461,13 @@ func AssignSliceItems(src, target []string, keepgoing bool) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3594,13 +3594,13 @@ func SliceEnd(src []int, sliceFn func(idx, val int) error, sliceEndFn func()) (e
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3640,13 +3640,13 @@ func SliceEnd(src []int, sliceFn func(idx, val int) error, sliceEndFn func()) (e
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3772,13 +3772,13 @@ func SliceEndWithErr(src []int, sliceFn func(idx, val int) error, sliceEndFn fun
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3818,13 +3818,13 @@ func SliceEndWithErr(src []int, sliceFn func(idx, val int) error, sliceEndFn fun
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3950,13 +3950,13 @@ func SliceEndWithCtx(src []int, sliceFn func(idx, val int) error, sliceEndFn fun
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -3996,13 +3996,13 @@ func SliceEndWithCtx(src []int, sliceFn func(idx, val int) error, sliceEndFn fun
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4128,13 +4128,13 @@ func SliceEndWithCtxAndErr(src []int, sliceFn func(idx, val int) error, sliceEnd
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4174,13 +4174,13 @@ func SliceEndWithCtxAndErr(src []int, sliceFn func(idx, val int) error, sliceEnd
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4315,13 +4315,13 @@ func AssignMapItems(src map[string]int, keys []string, values []int, keepgoing b
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4454,13 +4454,13 @@ func ForEachMapItem[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4501,13 +4501,13 @@ func ForEachMapItem[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4635,13 +4635,13 @@ func ForEachMapItemError[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4682,13 +4682,13 @@ func ForEachMapItemError[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4817,13 +4817,13 @@ func ForEachMapItemContext[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -4864,13 +4864,13 @@ func ForEachMapItemContext[K comparable, V any](
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {

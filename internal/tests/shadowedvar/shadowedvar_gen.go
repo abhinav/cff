@@ -112,13 +112,13 @@ func CtxConflict(ctx string) (string, error) {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -269,13 +269,13 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -335,13 +335,13 @@ func CtxConflictParallel(ctx string) (string, string, error) {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
@@ -475,13 +475,13 @@ func CtxConflictSlice(ctx string, target []string) error {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -607,13 +607,13 @@ func CtxConflictMap(ctx int, input map[int]int) ([]int, error) {
 							for {
 								frame, more := frames.Next()
 								fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-								if !more || b.Len() >= 1024 {
+								if !more {
 									break
 								}
 							}
 							return b.String()
 						}
-						pc := make([]uintptr, 20)
+						pc := make([]uintptr, 64)
 						n := runtime.Callers(2, pc)
 						stacktrace := "[frames]:\n"
 						if n != 0 {
@@ -773,13 +773,13 @@ func PredicateCtxConflict(f func(), ctx bool) error {
 						for {
 							frame, more := frames.Next()
 							fmt.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
-							if !more || b.Len() >= 1024 {
+							if !more {
 								break
 							}
 						}
 						return b.String()
 					}
-					pc := make([]uintptr, 20)
+					pc := make([]uintptr, 64)
 					n := runtime.Callers(2, pc)
 					stacktrace := "[frames]:\n"
 					if n != 0 {
