@@ -35,8 +35,6 @@ getStack := func (frames *{{ import "runtime" }}.Frames) string {
         frame, more := frames.Next()
         {{ $fmt }}.Fprintf(&b, "%s()\n\t%s:%d\n", formatFunction(frame.Function), frame.File, frame.Line)
         {{- /* Check whether there are more frames to process after this one */ -}}
-        {{- /* or if stack trace is getting too long. 1024 was chosen to match */ -}}
-        {{- /* length used by runtime/debug.Stack() */}}
         if !more {
             break
         }
