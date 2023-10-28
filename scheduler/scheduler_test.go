@@ -808,3 +808,28 @@ func TestWorkerTermination(t *testing.T) {
 	assert.Contains(t, err.Error(), "job exited unexpectedly")
 	assert.Equal(t, "ran", result)
 }
+
+func BenchmarkEnqueue(b *testing.B) {
+	// Measures the overhead of enqueuing tasks with the scheduler.
+	// To measure this, we'll enqueue a job and wait for it to run.
+	//
+	// Since we always wait for th ejob to run before enqueuing the next,
+	// the job queue will never grow beyond 1.
+	sched := (Config{Concurrency: 1}).New()
+	defer func() {
+		assert.NoError(b, sched.Wait(context.Background()))
+	}()
+
+	stepc := make(chan struct{})
+	fn := func(context.Context) error {
+		stepc <- struct{}{}
+		return nil
+	}
+	ctx := context.Background()
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		sched.Enqueue(ctx, Job{Run: fn})
+		<-stepc
+	}
+}
