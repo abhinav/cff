@@ -37,7 +37,7 @@
 package scheduler
 
 import (
-	"container/list"
+	"container/heap"
 	"context"
 	"errors"
 	"runtime"
@@ -296,6 +296,7 @@ type ScheduledJob struct {
 	// read-write, but only within Scheduler.run. DO NOT read or write
 	// them outside scheduler.run, as that will introduce a data race.
 
+	readyIdx  int             // index of this job in the ready list
 	remaining int             // number of jobs we're waiting for
 	consumers []*ScheduledJob // jobs waiting for this job
 	done      bool            // whether this was run, regardless of success or failure
@@ -318,9 +319,10 @@ func (s *Scheduler) Enqueue(ctx context.Context, j Job) *ScheduledJob {
 	// places a partially initialized object into the enqueuec channel,
 	// and the Scheduler Loop initializes the rest of it.
 	pj := &ScheduledJob{
-		ctx:  ctx,
-		run:  j.Run,
-		deps: j.Dependencies,
+		ctx:      ctx,
+		run:      j.Run,
+		deps:     j.Dependencies,
+		readyIdx: -1, // not in ready list yet
 	}
 	s.enqueuec <- pj // panics if closed
 	return pj
@@ -370,9 +372,10 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 	}
 
 	// Jobs ready to be thrown into the ready channel.
-	ready := list.New() // []*ScheduledJob
-	// TODO(abg): Use a maxheap here based on the number of consumers.
-	// That way, we'll run jobs that unblock the most consumers first.
+	//
+	// These are ordered by the number of jobs that depend on them
+	// with [0] being the job with the most consumers.
+	var ready readyJobs
 
 	// Number of jobs that are executing.
 	ongoing := 0
@@ -394,13 +397,9 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 		// to insert into a nil channel never resolves so the select
 		// will never pick that path.
 		readyc := s.readyc
-		var (
-			nextEl *list.Element
-			next   *ScheduledJob
-		)
+		var next *ScheduledJob
 		if ready.Len() > 0 {
-			nextEl = ready.Front()
-			next = nextEl.Value.(*ScheduledJob)
+			next = ready[0]
 		} else {
 			readyc = nil
 		}
@@ -409,7 +408,7 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 		case readyc <- next:
 			// Remove from the ready queue only if we scheduled in
 			// this iteration.
-			ready.Remove(nextEl)
+			heap.Pop(&ready)
 
 			ongoing++
 
@@ -435,6 +434,9 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 					continue
 				}
 				dep.consumers = append(dep.consumers, job)
+				if dep.readyIdx != -1 {
+					heap.Fix(&ready, dep.readyIdx)
+				}
 				job.remaining++
 			}
 
@@ -442,7 +444,7 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 
 			// No outstanding dependencies. Ready to run.
 			if job.remaining == 0 {
-				ready.PushBack(job)
+				heap.Push(&ready, job)
 			} else {
 				waiting++
 			}
@@ -480,7 +482,7 @@ func (s *Scheduler) run(emitter Emitter, freq time.Duration) {
 				consumer.remaining--
 				if consumer.remaining == 0 {
 					waiting--
-					ready.PushBack(consumer)
+					heap.Push(&ready, consumer)
 				}
 			}
 
@@ -543,4 +545,41 @@ func idleWorkers(concurrency, ongoing int) int {
 		idle = 0
 	}
 	return idle
+}
+
+// readyJobs is a max-heap of jobs that are ready to be executed.
+//
+// The heap is ordered by the number of jobs that depend on a job
+// with [0] being the job with the most dependents.
+type readyJobs []*ScheduledJob
+
+func (js readyJobs) Len() int {
+	return len(js)
+}
+
+func (js readyJobs) Less(i, j int) bool {
+	return len(js[i].consumers) > len(js[j].consumers)
+}
+
+func (js readyJobs) Swap(i, j int) {
+	js[i], js[j] = js[j], js[i]
+	js[i].readyIdx = i
+	js[j].readyIdx = j
+}
+
+func (js *readyJobs) Push(x any) {
+	n := len(*js)
+	item := x.(*ScheduledJob)
+	item.readyIdx = n
+	*js = append(*js, item)
+}
+
+func (js *readyJobs) Pop() any {
+	old := *js
+	n := len(old)
+	item := old[n-1]
+	old[n-1] = nil     // avoid memory leak
+	item.readyIdx = -1 // for safety
+	*js = old[:n-1]
+	return item
 }
